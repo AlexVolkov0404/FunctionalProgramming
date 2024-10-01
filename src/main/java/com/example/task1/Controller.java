@@ -13,7 +13,7 @@ public class Controller {
         String name;
     }
 
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     @GetMapping(value = "/products/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     String getProduct(@PathVariable int id) {
