@@ -14,7 +14,7 @@ class Task1ApplicationTests {
     @Test
     void failTest()
     {
-//        assertThat(false).isTrue();
+        assertThat(false).isTrue();
     }
 
 }
