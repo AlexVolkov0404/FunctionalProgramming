@@ -8,10 +8,8 @@ plugins {
 
 sonar {
     properties {
-        property("sonar.projectKey", "Test1")
-        property("sonar.organization", "myOrganization")
-        property("sonar.token", "sqp_9ffdba23d644e72f3ee081bedc07e966445764b4")
-        property("sonar.host.url", "http://192.168.0.107:9000")
+        property("sonar.projectKey", "AlexVolkov0404_functionalprogramming_d87f11fc-7033-48dc-8a49-56ece35cb7aa")
+        property("sonar.organization", "AlexVolkov0404")
     }
 }
 
