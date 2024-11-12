@@ -57,6 +57,7 @@ jobs:
         restore-keys: ${{ runner.os }}-gradle
 
     - name: Build and analyze
+      shell: cmd
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
