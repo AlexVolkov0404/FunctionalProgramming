@@ -58,7 +58,7 @@ jobs:
 
     - name: K6 testing
       shell: cmd
-      run: ./src/main/resources/run-k6.bat
+      run: cd src/main/resources/ & run-k6.bat
 #    - name: Build and analyze
 #      shell: cmd
 #      env:
