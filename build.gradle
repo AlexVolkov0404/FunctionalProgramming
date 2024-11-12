@@ -51,9 +51,10 @@ tasks.named('asciidoctor') {
 
 import com.bmuschko.gradle.docker.tasks.image.*
 import com.bmuschko.gradle.docker.tasks.container.*
+/*
 
 task createDockerFile(type: Dockerfile) {
-    from 'alpine:3.17'
+    from 'amazoncorretto:17'
     copyFile jar.archiveFileName.get(), '/app/test_service.jar'
     entryPoint 'java'
     defaultCommand '-jar', '/app/test_service.jar'
@@ -69,7 +70,14 @@ task syncJar(type: Copy) {
 task buildImage(type: DockerBuildImage) {
     dependsOn createDockerFile, syncJar
     inputDir = createDockerFile.getDestDir()
+    buildArgs = ( [ "JAR_FILE":"build/libs/\\*.jar" ] )
     images = ["docker/fp-application-image:1.0"]
+}
+*/
+
+tasks.named("bootBuildImage") {
+    imageName = "docker/fp-application-image:1.0"
+    environment["BP_JVM_VERSION"] = "17"
 }
 
 def ourContainerName = "fp-app"
@@ -86,8 +94,8 @@ task removeContainer(type: DockerRemoveContainer) {
 }
 
 task createContainer(type: DockerCreateContainer) {
-    dependsOn buildImage, removeContainer
-    targetImageId buildImage.getImageId()
+    dependsOn bootBuildImage, removeContainer
+    targetImageId bootBuildImage.getImageName()
     containerName = "$ourContainerName"
     hostConfig.portBindings = ['8080:8080']
 }

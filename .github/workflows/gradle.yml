@@ -56,10 +56,6 @@ jobs:
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
         restore-keys: ${{ runner.os }}-gradle
 
-    - name: Create docker container
-      shell: cmd
-      run: ./gradlew createContainer
-
     - name: Run docker container
       shell: cmd
       run: ./gradlew startContainer
