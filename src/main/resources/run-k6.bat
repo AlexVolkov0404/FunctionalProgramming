@@ -1,0 +1,3 @@
+docker-compose run --rm k6 run //scripts//constant-arrival-rate.js --out json=//logs//constant-arrival-rate.json --out influxdb=http://influxdb:8086/k6
+docker-compose run --rm k6 run //scripts//constant-vus.js --out json=//logs//constant-vus.json --out influxdb=http://influxdb:8086/k6
+docker-compose run --rm k6 run //scripts//ramping-vus.js --out json=//logs//ramping-vus.json --out influxdb=http://influxdb:8086/k6

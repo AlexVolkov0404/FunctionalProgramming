@@ -1,0 +1,64 @@
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+
+networks:
+  front-tier:
+  back-tier:
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.36.2
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+    networks:
+      - back-tier
+    restart: always
+
+  grafana:
+    image: grafana/grafana
+    user: "472"
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./grafana/config.monitoring
+    networks:
+      - back-tier
+      - front-tier
+    restart: always
+
+  influxdb:
+    image: influxdb:1.8
+    networks:
+      - back-tier
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_DB=k6
+
+  k6:
+    image: grafana/k6:latest
+    networks:
+      - back-tier
+    ports:
+      - "6565:6565"
+    environment:
+      - K6_OUT=influxdb=http://influxdb:8086/k6
+    volumes:
+      - ./k6/scripts:/scripts
+      - ./k6/logs:/logs
+
+# 11378 - good dashboard template

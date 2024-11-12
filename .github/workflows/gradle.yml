@@ -42,12 +42,12 @@ jobs:
         name: Package
         path: build/libs
     
-    - name: Cache SonarQube packages
-      uses: actions/cache@v1
-      with:
-        path: ~/.sonar/cache
-        key: ${{ runner.os }}-sonar
-        restore-keys: ${{ runner.os }}-sonar
+#    - name: Cache SonarQube packages
+#      uses: actions/cache@v1
+#      with:
+#        path: ~/.sonar/cache
+#        key: ${{ runner.os }}-sonar
+#        restore-keys: ${{ runner.os }}-sonar
 
     - name: Cache Gradle packages
       uses: actions/cache@v1
@@ -56,12 +56,15 @@ jobs:
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
         restore-keys: ${{ runner.os }}-gradle
 
-    - name: Build and analyze
+    - name: K6 testing
       shell: cmd
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      run: ./gradlew build sonar --info --warning-mode all
+      run: ./src/main/resources/run-k6.bat
+#    - name: Build and analyze
+#      shell: cmd
+#      env:
+#        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#      run: ./gradlew build sonar --info --warning-mode all
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
