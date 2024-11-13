@@ -67,7 +67,7 @@ jobs:
     - name: Upload K6 reports
       uses: actions/upload-artifact@v4
       with:
-        name: Package
+        name: K6-Report
         path: src/main/resources/k6/logs
 
     - name: Stop docker container
