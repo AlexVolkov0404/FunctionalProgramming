@@ -64,6 +64,12 @@ jobs:
       shell: cmd
       run: cd src/main/resources/ & run-k6.bat
 
+    - name: Upload K6 reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: Package
+        path: src/main/resources/k6/logs
+
     - name: Stop docker container
       shell: cmd
       run: ./gradlew stopContainer
