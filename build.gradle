@@ -97,7 +97,8 @@ task createContainer(type: DockerCreateContainer) {
     dependsOn bootBuildImage, removeContainer
     targetImageId bootBuildImage.getImageName()
     containerName = "$ourContainerName"
-    hostConfig.portBindings = ['8080:8080']
+    hostConfig.network = 'resources_back-tier'
+    hostConfig.portBindings.add('8080:8080')
 }
 
 task startContainer(type: DockerStartContainer) {

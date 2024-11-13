@@ -17,6 +17,7 @@ export const options = {
 };
 
 export default function () {
-    http.get('http://host.docker.internal:8080')
+//    http.get('http://host.docker.internal:8080')
+    http.get('http://fp-app:8080')
     sleep(0.5);
 }
